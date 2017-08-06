@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+
+  webzash:
+    build: .
+    container_name: webzash
+    ports:
+      - "80:80"
+      - "443:443"
+      - "25:25"
+      - "22:22"
+    environment:
+      CAKEPHP_WEBROOT: /var/www/webzash/app/webroot/
+    links:
+      - webzash_db
+    volumes:
+      - ./data/webzash.sqlite:/var/www/webzash/app/Plugin/Webzash/Database/webzash.sqlite
+  webzash_db:
+    image: mariadb:10
+    container_name: webzash_db
+    environment:
+      MYSQL_DATABASE: webzash
+      MYSQL_ROOT_PASSWORD: WZdb4627
+    ports:
+      - "3306:3306"
+    volumes:
+      - './data/db:/var/lib/mysql'
