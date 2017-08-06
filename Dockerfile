@@ -2,7 +2,8 @@ FROM php:5.6-apache
 MAINTAINER Will Payne <will@paynelabs.io>
 ENV DEBIAN_FRONTEND noninteractive
 ENV CAKEPHP_WEBROOT /var/www/webzash/app/webroot
-RUN apt-get update && apt-get -y upgrade && apt-get -y install wget unzip git php5-mysql php5-mcrypt curl \
+RUN apt-get update && apt-get -y upgrade \
+    && apt-get -y install wget unzip git php5-mysql php5-mcrypt curl \
     && php5enmod mcrypt \
     && curl -sSL https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer \
     && apt-get clean \
@@ -19,7 +20,7 @@ RUN chmod +x /cakephp-bootstrap.sh
 ADD core.php /var/www/webzash/app/Config/
 ADD bootstrap.php /var/www/webzash/app/Config/
 ADD routes.php /var/www/webzash/app/Config/
-# ADD database.php /var/www/webzash/app/Config/
+
 RUN git clone https://github.com/slywalker/cakephp-plugin-boost_cake.git /var/www/webzash/app/Plugin/BoostCake
 RUN git clone https://github.com/prashants/webzash.git /var/www/webzash/app/Plugin/Webzash
 COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
